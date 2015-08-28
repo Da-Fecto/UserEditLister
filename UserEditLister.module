@@ -10,13 +10,13 @@ class UserEditLister extends WireData implements Module {
         return array(
             'title' => 'User edit Lister',
             'summary' => __('Allow to edit users inside lister when users have the user-admin permission.'),
-            'version' => '0.0.1',
+            'version' => '0.0.2',
             'author' => 'Martijn Geerts (Calago)',
             'icon' => 'user',
             'autoload' => function() {
-                // Superusers get access any way, return false
+                // Superusers get access anyway, return false.
                 if (wire('user')->isSuperuser()) return false;
-                // Autoload when user has permission to edit users
+                // Autoload when user has permission user-admin.
                 return wire('user')->hasPermission('user-admin');
             },
         );
