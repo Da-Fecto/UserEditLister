@@ -10,7 +10,7 @@ class UserEditLister extends WireData implements Module {
         return array(
             'title' => 'User edit Lister',
             'summary' => __('Allow to edit users inside lister when users have the user-admin permission.'),
-            'version' => '0.0.2',
+            'version' => '0.0.3',
             'author' => 'Martijn Geerts (Calago)',
             'icon' => 'user',
             'autoload' => function() {
@@ -23,6 +23,10 @@ class UserEditLister extends WireData implements Module {
     }
 
     public function init() {
+
+        if ($this->user->isSuperuser()) return;
+        if (!$this->user->hasPermission('user-admin')) return;    
+    
         $this->addHookAfter('Page::editable', function($event) {
             if ($event->object->template != 'user') return;
             $event->return = true;
